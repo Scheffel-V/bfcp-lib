@@ -4,17 +4,21 @@ const Config = require('config');
 const Hello = require('./messages/hello.js');
 const HelloAck = require('./messages/helloAck.js');
 const FloorRequest = require('./messages/floorRequest.js');
+const FloorRelease = require('./messages/floorRelease.js');
 const Parser = require('./parser/parser.js');
 
 let conferenceId = 1;
 let transactionId = 15;
 let userId = 2;
 let floorId = 5;
+let floorRequestId = 10;
 let hello1 = new Hello(conferenceId, transactionId, userId, floorId);
 let floorRequest1 = new FloorRequest(conferenceId, transactionId, userId, floorId);
+let floorRelease1 = new FloorRelease(conferenceId, transactionId, userId, floorRequestId);
 
-//const message = Buffer.from(hello1.encode());
-const message = Buffer.from(floorRequest1.encode());
+const message = Buffer.from(hello1.encode());
+//const message = Buffer.from(floorRequest1.encode());
+//const message = Buffer.from(floorRelease1.encode());
 
 client.on('error', (err) => {
   console.log(`client error:\n${err.stack}`);

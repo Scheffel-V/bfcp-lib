@@ -4,6 +4,7 @@ const Config = require('config');
 const Hello = require('./messages/hello.js');
 const HelloAck = require('./messages/helloAck.js');
 const FloorRequest = require('./messages/floorRequest.js');
+const FloorRelease = require('./messages/floorRelease.js');
 const FloorRequestStatus = require('./messages/floorRequestStatus.js');
 const RequestStatusValue = require('./messages/requestStatusValues.js');
 const Parser = require('./parser/parser.js');
@@ -14,6 +15,7 @@ let userId = 2;
 let floorId = 5;
 let helloAck1 = new HelloAck(conferenceId, transactionId, userId);
 let floorRequestStatus1 = new FloorRequestStatus(conferenceId, transactionId, userId, 88, 99, RequestStatusValue.Granted);
+let floorRequestStatus2 = new FloorRequestStatus(conferenceId, transactionId, userId, 88, 99, RequestStatusValue.Released);
 
 server.on('error', (err) => {
   console.log(`server error:\n${err.stack}`);
@@ -42,8 +44,11 @@ server.on('message', (msg, rinfo) => {
     console.log('FloorRequest received, sending FloorRequestStatus');
     const message = Buffer.from(floorRequestStatus1.encode());
     server.send(message, Config.get('client.port'), Config.get('client.ip'), (err) => { });
+  } else if(obj instanceof FloorRelease) {
+    console.log('FloorRelease received, sending FloorRequestStatus');
+    const message = Buffer.from(floorRequestStatus2.encode());
+    server.send(message, Config.get('client.port'), Config.get('client.ip'), (err) => { });
   }
-
 });
 
 server.on('listening', () => {

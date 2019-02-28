@@ -4,11 +4,13 @@ const SupportedAttributes = require('../attributes/supportedAttributes.js');
 const SupportedPrimitives = require('../attributes/supportedPrimitives.js');
 const FloorRequestStatusAtr = require('../attributes/floorRequestStatus.js');
 const FloorRequestInformation = require('../attributes/floorRequestInformation.js');
+const FloorRequestId = require('../attributes/floorRequestId.js');
 const Primitive = require('../messages/primitive.js');
 const CommonHeader = require('../messages/commonHeader.js');
 const Hello = require('../messages/hello.js');
 const HelloAck = require('../messages/helloAck.js');
 const FloorRequest = require('../messages/floorRequest.js');
+const FloorRelease = require('../messages/floorRelease.js');
 const FloorRequestStatusMsg = require('../messages/floorRequestStatus.js');
 
 class Parser {
@@ -61,6 +63,11 @@ class Parser {
           attributeList.push(new RequestStatus(content.requestStatus, content.queuePosition));
           break;
 
+        case AttributeType.FloorRequestId:
+          content = Parser._parseFloorRequestId(attribute.substring(16));
+          attributeList.push(new FloorRequestId(content));
+          break;
+
         default:
           throw new Error('I cant parse this attribute!');
       }
@@ -102,23 +109,22 @@ class Parser {
   }
 
   static _parseFloorRequestInformation(content) {
-    let floorRequestId = parseInt(content.substring(0, 16), 2);
-    let floorId = parseInt(content.substring(32, 48), 2);
-    let requestStatus = parseInt(content.substring(64, 72), 2)
     return {
-      'floorRequestId': floorRequestId,
-      'floorId': floorId,
-      'requestStatus': requestStatus
+      'floorRequestId': parseInt(content.substring(0, 16), 2),
+      'floorId': parseInt(content.substring(32, 48), 2),
+      'requestStatus': parseInt(content.substring(64, 72), 2)
     }
   }
 
   static _parseRequestStatus(content) {
-    let requestStatus = parseInt(content.substring(0, 8), 2);
-    let queuePosition = parseInt(content.substring(8, 16), 2);
     return {
-      'requestStatus': requestStatus,
-      'queuePosition': queuePosition
+      'requestStatus': parseInt(content.substring(0, 8), 2),
+      'queuePosition': parseInt(content.substring(8, 16), 2)
     }
+  }
+
+  static _parseFloorRequestId(content) {
+    return parseInt(content.substring(0, 16), 2);
   }
 
   static parseMessage(message) {
@@ -153,6 +159,12 @@ class Parser {
         floorRequestStatus.commonHeader = commonHeader;
         floorRequestStatus.attributes = attributes;
         return floorRequestStatus;
+
+      case Primitive.FloorRelease:
+        let floorRelease = new FloorRelease();
+        floorRelease.commonHeader = commonHeader;
+        floorRelease.attributes = attributes;
+        return floorRelease;
     }
   }
 

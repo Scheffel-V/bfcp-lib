@@ -12,25 +12,6 @@ class FloorRequestInformation extends Attribute {
     content.push(new FloorRequestStatus(floorId, requestStatus));
     super(Type.FloorRequestInformation, Length.FloorRequestInformation, Format.Grouped, content);
   }
-
-  /** encode() {
-    let type = this._complementBinary(this.type.toString(2), 7);
-    let m = '0';
-    let length = this._complementBinary(this.length.toString(2), 8);
-    let content = '';
-
-    for(let attribute of this.content) {
-      if(attribute instanceof Attribute) {
-        content = content + attribute.encode();
-      } else if(typeof attribute === 'string') {
-        content = content + this._complementBinary(attribute.toString(2), 16);
-      } else {
-        throw new Error('Unknown attribute!');
-      }
-    }
-
-    return this._complementPadding(type + m + length + content);;
-  } **/
 }
 
 module.exports = FloorRequestInformation;
