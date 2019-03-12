@@ -1,4 +1,6 @@
 const Format = require('./format.js');
+const Type = require('./type.js');
+const Complements = require('../parser/complements.js');
 
 class Attribute {
   constructor(type, length, format, content) {
@@ -41,54 +43,82 @@ class Attribute {
   }
 
   encode() {
-    let type = this._complementBinary(this.type.toString(2), 7);
+    let type = Complements.complementBinary(this.type.toString(2), 7);
     let m = '0';
-    let length = this._complementBinary(this.length.toString(2), 8);
+    let length = Complements.complementBinary(this.length.toString(2), 8);
     let content = null;
 
     switch(this.format) {
       case Format.Unsigned16:
-        content = this._complementBinary(this.content.toString(2), 16);
+        content = Complements.complementBinary(this.content.toString(2), 16);
         break;
 
       case Format.Grouped:
         content = this._encodeGroupedAttributeContent();
         break;
 
+      case Format.OctetString:
+        content = this._encodeOctetStringContent();
+        break;
+
+      case Format.OctetString16:
+        content = this._encodeOctetString16Content();
+        break;
+
       default:
-        throw new Error("I can't encode this attribute.");
+        throw new Error("I can't encode this attribute. Format unknown.");
     }
-    return type + m + length + content;
+
+    return Complements.complementPadding(type + m + length + content);
   }
 
   _encodeGroupedAttributeContent() {
     let newContent = '';
+
     for(let attribute of this.content) {
       if(attribute instanceof Attribute) {
         newContent = newContent + attribute.encode();
       } else if(typeof attribute === 'string' || typeof attribute === 'number') {
-        newContent = newContent + this._complementBinary(attribute.toString(2), 16);
+        newContent = newContent + Complements.complementBinary(attribute.toString(2), 16);
       } else {
         throw new Error('Unknown attribute!');
       }
     }
+
     return newContent;
   }
 
-  _complementBinary(binary, length) {
-    let complement = length - binary.length;
-    if(complement <= 0) {
-      return binary;
+  _encodeOctetStringContent() {
+    let newContent = '';
+
+    switch(this.type) {
+      case Type.SupportedAttributes:
+        for(let attributeType of this.content) {
+          newContent = newContent + Complements.complementBinary(attributeType.toString(2), 7) + '0';
+        }
+        return newContent;
+
+      case Type.SupportedPrimitives:
+        for(let primitiveType of this.content) {
+          newContent = newContent + Complements.complementBinary(primitiveType.toString(2), 8);
+        }
+        return newContent;
+
+      default:
+        throw new Error("I can't encode this octet string attribute. Type unknown.");
     }
-    let complementString = '0'.repeat(complement);
-    return complementString + binary;
   }
 
-  _complementPadding(content) {
-    while(content.length < 100000 && content.length % 32 != 0) {
-      content = content + '00000000';
+  _encodeOctetString16Content() {
+    switch(this.type) {
+      case Type.RequestStatus:
+        let requestStatus = Complements.complementBinary(this.content[0].toString(2), 8);
+        let queuePosition = Complements.complementBinary(this.content[1].toString(2), 8);
+        return requestStatus + queuePosition;
+
+      default:
+        throw new Error("I can't encode this octet string 16 attribute. Type unknown.");
     }
-    return content;
   }
 }
 

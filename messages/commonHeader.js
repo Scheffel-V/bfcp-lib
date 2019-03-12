@@ -1,3 +1,5 @@
+const Complements = require('../parser/complements.js');
+
 class CommonHeader {
   constructor(primitive, payloadLength, conferenceId, transactionId, userId) {
     this._primitive = primitive;
@@ -50,23 +52,14 @@ class CommonHeader {
   encode() {
     let ver = '001';
     let reserved = '00000';
-    let primitive = this._complementBinary(this.primitive.toString(2), 8);
-    let payloadLength = this._complementBinary(this.payloadLength.toString(2), 16);
-    let conferenceId = this._complementBinary(this.conferenceId.toString(2), 32);
-    let transactionId = this._complementBinary(this.transactionId.toString(2), 16);
-    let userId = this._complementBinary(this.userId.toString(2), 16);
+    let primitive = Complements.complementBinary(this.primitive.toString(2), 8);
+    let payloadLength = Complements.complementBinary(this.payloadLength.toString(2), 16);
+    let conferenceId = Complements.complementBinary(this.conferenceId.toString(2), 32);
+    let transactionId = Complements.complementBinary(this.transactionId.toString(2), 16);
+    let userId = Complements.complementBinary(this.userId.toString(2), 16);
 
     return ver + reserved + primitive + payloadLength + conferenceId +
       transactionId + userId;
-  }
-
-  _complementBinary(binary, length) {
-    let complement = length - binary.length;
-    if(complement <= 0) {
-      return binary;
-    }
-    let complementString = '0'.repeat(complement);
-    return complementString + binary;
   }
 }
 

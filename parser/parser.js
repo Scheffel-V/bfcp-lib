@@ -12,6 +12,7 @@ const HelloAck = require('../messages/helloAck.js');
 const FloorRequest = require('../messages/floorRequest.js');
 const FloorRelease = require('../messages/floorRelease.js');
 const FloorRequestStatusMsg = require('../messages/floorRequestStatus.js');
+const Complements = require('../parser/complements.js');
 
 class Parser {
   static _parseCommonHeader(commonHeader) {
@@ -26,6 +27,7 @@ class Parser {
 
   static _parseAttributes(attributes) {
     let attributeList = [];
+
     while(attributes != '') {
       let type = parseInt(attributes.substring(0, 7), 2);
       let length = parseInt(attributes.substring(8, 16), 2);
@@ -92,6 +94,7 @@ class Parser {
       let binType = content.substring(8 * (i - 1), 8 * i);
       attributeTypes.push(parseInt(binType.substring(0, 7), 2));
     }
+
     return attributeTypes;
   }
 
@@ -101,6 +104,7 @@ class Parser {
       let binPrimitive = content.substring(8 * (i - 1), 8 * i);
       primitives.push(parseInt(binPrimitive, 2));
     }
+
     return primitives;
   }
 
@@ -129,8 +133,9 @@ class Parser {
 
   static parseMessage(message) {
     let binaryMessage = '';
+    
     for (const value of message) {
-      binaryMessage = binaryMessage + Parser.complementBinary(value.toString(2), 8);
+      binaryMessage = binaryMessage + Complements.complementBinary(value.toString(2), 8);
     }
     let commonHeader = Parser._parseCommonHeader(binaryMessage.substring(0, 96));
     let attributes = Parser._parseAttributes(binaryMessage.substring(96));
@@ -166,15 +171,6 @@ class Parser {
         floorRelease.attributes = attributes;
         return floorRelease;
     }
-  }
-
-  static complementBinary(binary, length) {
-    let complement = length - binary.length;
-    if(complement <= 0) {
-      return binary;
-    }
-    let complementString = '0'.repeat(complement);
-    return complementString + binary;
   }
 }
 

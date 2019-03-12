@@ -16,16 +16,6 @@ class RequestStatus extends Attribute {
 
     super(Type.RequestStatus, Length.RequestStatus, Format.OctetString16, content);
   }
-
-  encode() {
-    let type = this._complementBinary(this.type.toString(2), 7);
-    let m = '0';
-    let length = this._complementBinary(this.length.toString(2), 8);
-    let requestStatus = this._complementBinary(this.content[0].toString(2), 8);
-    let queuePosition = this._complementBinary(this.content[1].toString(2), 8);
-    
-    return type + m + length + requestStatus + queuePosition;
-  }
 }
 
 module.exports = RequestStatus;

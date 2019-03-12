@@ -21,19 +21,6 @@ class SupportedAttributes extends Attribute {
     let length = supAttributes.length + 2;
     super(Type.SupportedAttributes, length, Format.OctetString, supAttributes);
   }
-
-  encode() {
-    let type = this._complementBinary(this.type.toString(2), 7);
-    let m = '0';
-    let length = this._complementBinary(this.length.toString(2), 8);
-    let content = '';
-
-    for(let attributeType of this.content) {
-      content = content + this._complementBinary(attributeType.toString(2), 7) + '0';
-    }
-
-    return this._complementPadding(type + m + length + content);;
-  }
 }
 
 module.exports = SupportedAttributes;
