@@ -12,6 +12,7 @@ const HelloAck = require('../messages/helloAck.js');
 const FloorRequest = require('../messages/floorRequest.js');
 const FloorRelease = require('../messages/floorRelease.js');
 const FloorRequestStatusMsg = require('../messages/floorRequestStatus.js');
+const FloorStatus = require('../messages/floorStatus.js');
 const Complements = require('../parser/complements.js');
 
 class Parser {
@@ -133,7 +134,7 @@ class Parser {
 
   static parseMessage(message) {
     let binaryMessage = '';
-    
+
     for (const value of message) {
       binaryMessage = binaryMessage + Complements.complementBinary(value.toString(2), 8);
     }
@@ -170,6 +171,15 @@ class Parser {
         floorRelease.commonHeader = commonHeader;
         floorRelease.attributes = attributes;
         return floorRelease;
+
+      case Primitive.FloorStatus:
+        let floorStatus = new FloorStatus();
+        floorStatus.commonHeader = commonHeader;
+        floorStatus.attributes = attributes;
+        return floorStatus;
+
+      default:
+        throw new Error("I can't decode this message. Unknown primitive.");
     }
   }
 }

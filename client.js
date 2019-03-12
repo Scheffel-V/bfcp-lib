@@ -16,8 +16,8 @@ let hello1 = new Hello(conferenceId, transactionId, userId, floorId);
 let floorRequest1 = new FloorRequest(conferenceId, transactionId, userId, floorId);
 let floorRelease1 = new FloorRelease(conferenceId, transactionId, userId, floorRequestId);
 
-const message = Buffer.from(hello1.encode());
-//const message = Buffer.from(floorRequest1.encode());
+//const message = Buffer.from(hello1.encode());
+const message = Buffer.from(floorRequest1.encode());
 //const message = Buffer.from(floorRelease1.encode());
 
 client.on('error', (err) => {
