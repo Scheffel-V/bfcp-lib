@@ -58,6 +58,8 @@ class Message {
         return 'HelloAck';
       case 13:
         return 'Error';
+      case 14:
+        return 'FloorRequestStatusAck'
       default:
         throw new Error("Error in message primitive!");
     }

@@ -50,6 +50,10 @@ class Primitive {
   static get Error() {
     return 13;
   }
+
+  static get FloorRequestStatusAck() {
+    return 14;
+  }
 }
 
 module.exports = Primitive;
