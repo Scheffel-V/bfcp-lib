@@ -2,6 +2,7 @@ const Parser = require('./parser/parser.js');
 const Primitive = require('./messages/primitive.js');
 const HelloAck = require('./messages/helloAck.js');
 const FloorRequestStatus = require('./messages/floorRequestStatus.js');
+const FloorStatus = require('./messages/floorStatus.js');
 
 class User {
   constructor(userId, conferenceId) {
@@ -52,6 +53,15 @@ class User {
     return this._floorRequestId;
   }
 
+
+  set wantedFloorId(wantedFloorId) {
+    this._wantedFloorId = wantedFloorId;
+  }
+
+  get wantedFloorId() {
+    return this._wantedFloorId;
+  }
+
   receiveMessage(message) {
     try {
       let bfcpMessage = Parser.parseMessage(message);
@@ -62,25 +72,24 @@ class User {
     }
   }
 
-
   helloAckMessage() {
     let helloAck = new HelloAck(this.conferenceId, this.currentMessage.commonHeader.transactionId, this.userId);
     return Buffer.from(helloAck.encode());
   }
 
-  floorRequestStatusMessage(requestStatus) {
-    let floorRequestStatus = new FloorRequestStatus(this.conferenceId, this.currentMessage.commonHeader.transactionId, this.userId, this.floorRequestId++, this.currentMessage.attributes[0].content, requestStatus);
+  floorRequestStatusMessage(floorId, requestStatus) {
+    let floorRequestStatus = new FloorRequestStatus(this.conferenceId, this.currentMessage.commonHeader.transactionId, this.userId, this.floorRequestId++, floorId, requestStatus);
     return Buffer.from(floorRequestStatus.encode());
   }
 
-  floorStatusMessage(floorRequestId, floorId, requestStatus) {
+  floorStatusMessage(floorId, requestStatus) {
     if(this.currentMessage.transactionId > this.currentTransactionId) {
       this.currentTransactionId = this.currentMessage.transactionId;
     }
 
     this.currentTransactionId++;
 
-    let floorStatus = new FloorStatus(this.conferenceId, this.currentTransactionId, this.userId, floorRequestId, floorId, requestStatus);
+    let floorStatus = new FloorStatus(this.conferenceId, this.currentTransactionId, this.userId, this.floorRequestId++, floorId, requestStatus);
     return Buffer.from(floorStatus.encode());
   }
 }

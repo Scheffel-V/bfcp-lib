@@ -14,6 +14,7 @@ const FloorRelease = require('../messages/floorRelease.js');
 const FloorRequestStatusMsg = require('../messages/floorRequestStatus.js');
 const FloorStatus = require('../messages/floorStatus.js');
 const FloorRequestStatusAck = require('../messages/floorRequestStatusAck.js');
+const FloorStatusAck = require('../messages/floorStatusAck.js');
 const Complements = require('../parser/complements.js');
 
 class Parser {
@@ -184,6 +185,12 @@ class Parser {
         floorRequestStatusAck.commonHeader = commonHeader;
         floorRequestStatusAck.attributes = attributes;
         return floorRequestStatusAck;
+
+      case Primitive.FloorStatusAck:
+        let floorStatusAck = new FloorStatusAck();
+        floorStatusAck.commonHeader = commonHeader;
+        floorStatusAck.attributes = attributes;
+        return floorStatusAck;
 
       default:
         throw new Error("I can't decode this message. Unknown primitive.");

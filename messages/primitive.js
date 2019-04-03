@@ -54,6 +54,10 @@ class Primitive {
   static get FloorRequestStatusAck() {
     return 14;
   }
+
+  static get FloorStatusAck() {
+    return 16;
+  }
 }
 
 module.exports = Primitive;
