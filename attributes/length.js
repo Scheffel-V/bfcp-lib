@@ -36,11 +36,11 @@ class Length {
   }
 
   static get SupportedAttributes() {
-    return 10;
+    return 2;
   }
 
   static get SupportedPrimitives() {
-    return 11;
+    return 2;
   }
 
   static get UserDisplayName() {

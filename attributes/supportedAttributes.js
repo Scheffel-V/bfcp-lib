@@ -1,7 +1,7 @@
 const Attribute = require('./attribute.js');
 const Format = require('./format.js');
-const Type = require('./type.js');
 const Length = require('./length.js');
+const Type = require('./type.js');
 
 class SupportedAttributes extends Attribute {
   constructor(attributes) {
@@ -18,7 +18,7 @@ class SupportedAttributes extends Attribute {
       supAttributes = attributes;
     }
 
-    let length = supAttributes.length + 2;
+    let length = supAttributes.length + Length.SupportedAttributes;
     super(Type.SupportedAttributes, length, Format.OctetString, supAttributes);
   }
 }

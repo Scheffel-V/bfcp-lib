@@ -1,8 +1,8 @@
 const Attribute = require('./attribute.js');
 const Format = require('./format.js');
-const Type = require('./type.js');
 const Length = require('./length.js');
 const Primitive = require('../messages/primitive.js');
+const Type = require('./type.js');
 
 class SupportedPrimitives extends Attribute {
   constructor(primitives) {
@@ -16,7 +16,7 @@ class SupportedPrimitives extends Attribute {
       supPrimitives = primitives;
     }
 
-    let length = supPrimitives.length + 2;
+    let length = supPrimitives.length + Length.SupportedPrimitives;
     super(Type.SupportedPrimitives, length, Format.OctetString, supPrimitives);
   }
 }

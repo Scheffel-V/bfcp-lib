@@ -1,9 +1,9 @@
-const Parser = require('../parser/parser.js');
-const Primitive = require('../messages/primitive.js');
-const RequestStatusValue = require('../messages/requestStatusValue.js');
-const HelloAck = require('../messages/helloAck.js');
 const FloorRequestStatus = require('../messages/floorRequestStatus.js');
 const FloorStatus = require('../messages/floorStatus.js');
+const Primitive = require('../messages/primitive.js');
+const HelloAck = require('../messages/helloAck.js');
+const RequestStatusValue = require('../messages/requestStatusValue.js');
+const Parser = require('../parser/parser.js');
 
 class User {
   constructor(userId, conferenceId) {
@@ -98,5 +98,6 @@ class User {
     return Buffer.from(floorStatus.encode());
   }
 }
+
 User.FloorRequestId = 0;
 module.exports = User;

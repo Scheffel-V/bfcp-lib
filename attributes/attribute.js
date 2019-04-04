@@ -1,6 +1,6 @@
+const Complements = require('../parser/complements.js');
 const Format = require('./format.js');
 const Type = require('./type.js');
-const Complements = require('../parser/complements.js');
 
 class Attribute {
   constructor(type, length, format, content) {

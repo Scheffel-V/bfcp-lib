@@ -1,5 +1,5 @@
-const Message = require('./message.js');
 const CommonHeader = require('./commonHeader.js');
+const Message = require('./message.js');
 const Primitive = require('./primitive.js');
 const SupportedPrimitives = require('../attributes/supportedPrimitives.js');
 const SupportedAttributes = require('../attributes/supportedAttributes.js');

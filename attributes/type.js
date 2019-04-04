@@ -36,7 +36,7 @@ class Type {
   }
 
   static get SupportedAttributes() {
-    return 10;
+    return 0;
   }
 
   static get SupportedPrimitives() {

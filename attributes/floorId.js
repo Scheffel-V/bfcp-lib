@@ -1,7 +1,7 @@
 const Attribute = require('./attribute.js');
 const Format = require('./format.js');
-const Type = require('./type.js');
 const Length = require('./length.js');
+const Type = require('./type.js');
 
 class FloorId extends Attribute {
   constructor(floorId) {

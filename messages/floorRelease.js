@@ -1,7 +1,7 @@
-const Message = require('./message.js');
 const CommonHeader = require('./commonHeader.js');
-const Primitive = require('./primitive.js');
 const FloorRequestId = require('../attributes/floorRequestId.js');
+const Message = require('./message.js');
+const Primitive = require('./primitive.js');
 
 class FloorRelease extends Message {
   constructor(conferenceId, transactionId, userId, floorRequestId) {

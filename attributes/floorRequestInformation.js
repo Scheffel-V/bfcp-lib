@@ -1,8 +1,8 @@
 const Attribute = require('./attribute.js');
 const FloorRequestStatus = require('./floorRequestStatus.js');
 const Format = require('./format.js');
-const Type = require('./type.js');
 const Length = require('./length.js');
+const Type = require('./type.js');
 
 
 class FloorRequestInformation extends Attribute {
