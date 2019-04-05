@@ -135,65 +135,69 @@ class Parser {
   }
 
   static parseMessage(message) {
-    let binaryMessage = '';
+    try {
+      let binaryMessage = '';
 
-    for (const value of message) {
-      binaryMessage = binaryMessage + Complements.complementBinary(value.toString(2), 8);
-    }
-    let commonHeader = Parser._parseCommonHeader(binaryMessage.substring(0, 96));
-    let attributes = Parser._parseAttributes(binaryMessage.substring(96));
+      for (const value of message) {
+        binaryMessage = binaryMessage + Complements.complementBinary(value.toString(2), 8);
+      }
+      let commonHeader = Parser._parseCommonHeader(binaryMessage.substring(0, 96));
+      let attributes = Parser._parseAttributes(binaryMessage.substring(96));
 
-    switch(commonHeader.primitive) {
-      case Primitive.Hello:
-        let hello = new Hello();
-        hello.commonHeader = commonHeader;
-        hello.attributes = attributes;
-        return hello;
+      switch(commonHeader.primitive) {
+        case Primitive.Hello:
+          let hello = new Hello();
+          hello.commonHeader = commonHeader;
+          hello.attributes = attributes;
+          return hello;
 
-      case Primitive.HelloAck:
-        let helloAck = new HelloAck();
-        helloAck.commonHeader = commonHeader;
-        helloAck.attributes = attributes;
-        return helloAck;
+        case Primitive.HelloAck:
+          let helloAck = new HelloAck();
+          helloAck.commonHeader = commonHeader;
+          helloAck.attributes = attributes;
+          return helloAck;
 
-      case Primitive.FloorRequest:
-        let floorRequest = new FloorRequest();
-        floorRequest.commonHeader = commonHeader;
-        floorRequest.attributes = attributes;
-        return floorRequest;
+        case Primitive.FloorRequest:
+          let floorRequest = new FloorRequest();
+          floorRequest.commonHeader = commonHeader;
+          floorRequest.attributes = attributes;
+          return floorRequest;
 
-      case Primitive.FloorRequestStatus:
-        let floorRequestStatus = new FloorRequestStatusMsg();
-        floorRequestStatus.commonHeader = commonHeader;
-        floorRequestStatus.attributes = attributes;
-        return floorRequestStatus;
+        case Primitive.FloorRequestStatus:
+          let floorRequestStatus = new FloorRequestStatusMsg();
+          floorRequestStatus.commonHeader = commonHeader;
+          floorRequestStatus.attributes = attributes;
+          return floorRequestStatus;
 
-      case Primitive.FloorRelease:
-        let floorRelease = new FloorRelease();
-        floorRelease.commonHeader = commonHeader;
-        floorRelease.attributes = attributes;
-        return floorRelease;
+        case Primitive.FloorRelease:
+          let floorRelease = new FloorRelease();
+          floorRelease.commonHeader = commonHeader;
+          floorRelease.attributes = attributes;
+          return floorRelease;
 
-      case Primitive.FloorStatus:
-        let floorStatus = new FloorStatus();
-        floorStatus.commonHeader = commonHeader;
-        floorStatus.attributes = attributes;
-        return floorStatus;
+        case Primitive.FloorStatus:
+          let floorStatus = new FloorStatus();
+          floorStatus.commonHeader = commonHeader;
+          floorStatus.attributes = attributes;
+          return floorStatus;
 
-      case Primitive.FloorRequestStatusAck:
-        let floorRequestStatusAck = new FloorRequestStatusAck();
-        floorRequestStatusAck.commonHeader = commonHeader;
-        floorRequestStatusAck.attributes = attributes;
-        return floorRequestStatusAck;
+        case Primitive.FloorRequestStatusAck:
+          let floorRequestStatusAck = new FloorRequestStatusAck();
+          floorRequestStatusAck.commonHeader = commonHeader;
+          floorRequestStatusAck.attributes = attributes;
+          return floorRequestStatusAck;
 
-      case Primitive.FloorStatusAck:
-        let floorStatusAck = new FloorStatusAck();
-        floorStatusAck.commonHeader = commonHeader;
-        floorStatusAck.attributes = attributes;
-        return floorStatusAck;
+        case Primitive.FloorStatusAck:
+          let floorStatusAck = new FloorStatusAck();
+          floorStatusAck.commonHeader = commonHeader;
+          floorStatusAck.attributes = attributes;
+          return floorStatusAck;
 
-      default:
-        throw new Error("I can't decode this message. Unknown primitive.");
+        default:
+          throw new Error("I can't decode this message. Unknown primitive.");
+      }
+    } catch(error) {
+      throw new Error("Problem parsing message. ", error);
     }
   }
 }

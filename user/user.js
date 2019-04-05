@@ -4,6 +4,7 @@ const Primitive = require('../messages/primitive.js');
 const HelloAck = require('../messages/helloAck.js');
 const RequestStatusValue = require('../messages/requestStatusValue.js');
 const Parser = require('../parser/parser.js');
+const AttrName = require('../attributes/name.js');
 
 class User {
   constructor(userId, conferenceId) {
@@ -83,7 +84,7 @@ class User {
       User.incFloorRequestId();
       floorRequestId = User.getFloorRequestId();
     } else {
-      floorRequestId = message.attributes[0].content;
+      floorRequestId = message.getAttribute(AttrName.FloorRequestId).content;
     }
     let floorRequestStatus = new FloorRequestStatus(this.conferenceId, message.commonHeader.transactionId, this.userId, floorRequestId, floorId, requestStatus);
     return Buffer.from(floorRequestStatus.encode());

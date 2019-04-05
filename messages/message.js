@@ -20,12 +20,13 @@ class Message {
     return this._attributes;
   }
 
-  get name() {
-    return this._name;
-  }
-
-  set name(name) {
-    this._name = name;
+  getAttribute(attributeName) {
+    for(let attribute of this.attributes) {
+      if(attribute.constructor.name == attributeName) {
+        return attribute;
+      }
+    }
+    return null;
   }
 
   encode() {
