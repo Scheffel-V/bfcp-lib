@@ -1,7 +1,7 @@
-let User = require('./user/user.js');
-let Primitive = require('./messages/primitive.js');
-let RequestStatusValue = require('./messages/requestStatusValue.js');
-let AttributeName = require('./attributes/name.js');
+let User = require('./lib/user/user.js');
+let Primitive = require('./lib/messages/primitive.js');
+let RequestStatusValue = require('./lib/messages/requestStatusValue.js');
+let AttributeName = require('./lib/attributes/name.js');
 
 let BFCPLib = {
   'User': User,
