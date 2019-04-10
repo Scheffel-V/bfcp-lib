@@ -114,15 +114,15 @@ the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.1).
 **RequestStatusValue** class is a abstraction of the Message Request Status as
 defined in the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.2.5).
 
-    | Value | Status |
-    | --- | --- |
-    | 1 | Pending |
-    | 2 | Accepted |
-    | 3 | Granted |
-    | 4 | Denied |
-    | 5 | Cancelled |
-    | 6 | Released |
-    | 7 | Revoked |
+  | Value | Status |
+  | --- | --- |
+  | 1 | Pending |
+  | 2 | Accepted |
+  | 3 | Granted |
+  | 4 | Denied |
+  | 5 | Cancelled |
+  | 6 | Released |
+  | 7 | Revoked |
 
 
 ## Attribute Name
