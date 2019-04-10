@@ -93,21 +93,21 @@ udpServer.bind(8000, '127.0.0.1', () => {
 **Primitive** class is a abstraction of the Message Primitive as defined in
 the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.1).
 
-    | Value | Primitive |
-    |-------|--------------------|
-    |   1   | FloorRequest       |
-    |   2   | FloorRelease       |
-    |   3   | FloorRequestQuery  |
-    |   4   | FloorRequestStatus |
-    |   5   | UserQuery          |
-    |   6   | UserStatus         |
-    |   7   | FloorQuery         |
-    |   8   | FloorStatus        |
-    |   9   | ChairAction        |
-    |   10  | ChairActionAck     |
-    |   11  | Hello              |
-    |   12  | HelloAck           |
-    |   13  | Error              |
+  | Value | Primitive |
+  | --- | --- |
+  | 1 | FloorRequest |
+  | 2 | FloorRelease |
+  | 3 | FloorRequestQuery |
+  | 4 | FloorRequestStatus |
+  | 5 | UserQuery |
+  | 6 | UserStatus |
+  | 7 | FloorQuery |
+  | 8 | FloorStatus |
+  | 9 | ChairAction |
+  | 10 | ChairActionAck |
+  | 11 | Hello |
+  | 12 | HelloAck |
+  | 13 | Error |
 
 
 ## Request Status Value
@@ -128,23 +128,23 @@ defined in the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.
 ## Attribute Name
 **Name** class is a abstraction of the attribute Names.
 
-    | Value | Name |
-    |-------------------------------|---------------------------|
-    |   'BeneficiaryId'             | BeneficiaryId             |
-    |   'FloorId'                   | FloorId                   |
-    |   'FloorRequestId'            | FloorRequestId            |
-    |   'Priority'                  | Priority                  |
-    |   'RequestStatus'             | RequestStatus             |
-    |   'ErrorCode'                 | ErrorCode                 |
-    |   'ErrorInfo'                 | ErrorInfo                 |
-    |   'ParticipantProvidedInfo'   | ParticipantProvidedInfo   |
-    |   'StatusInfo'                | StatusInfo                |
-    |   'SupportedAttributes'       | SupportedAttributes       |
-    |   'SupportedPrimitives'       | SupportedPrimitives       |
-    |   'UserDisplayName'           | UserDisplayName           |
-    |   'UserUri'                   | UserUri                   |
-    |   'BeneficiaryInformation'    | BeneficiaryInformation    |
-    |   'FloorRequestInformation'   | FloorRequestInformation   |
-    |   'RequestedByInformation'    | RequestedByInformation    |
-    |   'FloorRequestStatus'        | FloorRequestStatus        |
-    |   'OverallRequestStatus'      | OverallRequestStatus      |
+  | Value | Name |
+  |-------------------------------|---------------------------|
+  |   'BeneficiaryId'             | BeneficiaryId             |
+  |   'FloorId'                   | FloorId                   |
+  |   'FloorRequestId'            | FloorRequestId            |
+  |   'Priority'                  | Priority                  |
+  |   'RequestStatus'             | RequestStatus             |
+  |   'ErrorCode'                 | ErrorCode                 |
+  |   'ErrorInfo'                 | ErrorInfo                 |
+  |   'ParticipantProvidedInfo'   | ParticipantProvidedInfo   |
+  |   'StatusInfo'                | StatusInfo                |
+  |   'SupportedAttributes'       | SupportedAttributes       |
+  |   'SupportedPrimitives'       | SupportedPrimitives       |
+  |   'UserDisplayName'           | UserDisplayName           |
+  |   'UserUri'                   | UserUri                   |
+  |   'BeneficiaryInformation'    | BeneficiaryInformation    |
+  |   'FloorRequestInformation'   | FloorRequestInformation   |
+  |   'RequestedByInformation'    | RequestedByInformation    |
+  |   'FloorRequestStatus'        | FloorRequestStatus        |
+  |   'OverallRequestStatus'      | OverallRequestStatus      |
