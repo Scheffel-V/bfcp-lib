@@ -1,3 +1,8 @@
+/**
+ * bfcp-lib: A simple library for BFCP protocol
+ * @module bfcp-lib
+ */
+
 let User = require('./lib/user/user.js');
 let Primitive = require('./lib/messages/primitive.js');
 let RequestStatusValue = require('./lib/messages/requestStatusValue.js');
