@@ -115,14 +115,14 @@ the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.1).
 defined in the [RFCP 4582 - BFCP](https://tools.ietf.org/html/rfc4582#section-5.2.5).
 
     | Value | Status |
-    |-------|-----------|
-    |   1   | Pending   |
-    |   2   | Accepted  |
-    |   3   | Granted   |
-    |   4   | Denied    |
-    |   5   | Cancelled |
-    |   6   | Released  |
-    |   7   | Revoked   |
+    | --- | --- |
+    | 1 | Pending |
+    | 2 | Accepted |
+    | 3 | Granted |
+    | 4 | Denied |
+    | 5 | Cancelled |
+    | 6 | Released |
+    | 7 | Revoked |
 
 
 ## Attribute Name
