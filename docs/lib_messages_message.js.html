@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: lib/messages/message.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: lib/messages/message.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @classdesc
+ * Message class is a abstraction of the Message as defined in the
+ * RFC 4582 - BFCP
+ * https://tools.ietf.org/html/rfc4582#section-5.3
+ * @memberof bfcp-lib
+ */
+class Message {
+  /**
+   * @constructor
+   * @param {bfcp-lib.Message.CommonHeader} commonHeader The message common header
+   * @param {bfcp-lib.Attribute[]}  attributes   The message list of attributes
+   */
+  constructor(commonHeader, attributes) {
+    this._commonHeader = commonHeader;
+    this._attributes = attributes;
+  }
+
+  /**
+   * Gets the Message CommonHeader
+   * @return {bfcp-lib.Message.CommonHeader} The CommonHeader object
+   * @public
+   */
+  get commonHeader() {
+    return this._commonHeader;
+  }
+
+  set commonHeader(commonHeader) {
+    this._commonHeader = commonHeader;
+  }
+
+  /**
+   * Gets the Message attributes
+   * @return {bfcp-lib.Attribute[]} The Attributes List
+   * @public
+   */
+  get attributes() {
+    return this._attributes;
+  }
+
+  set attributes(attributes) {
+    this._attributes = attributes;
+  }
+
+  /**
+   * Gets the message attribute that contains the name received. If this
+   * message haven't this attribute, returns null.
+   * @param  {bfcp-lib.Attribute.Name} attributeName The attribute Name
+   * @return {bfcp-lib.Attribute}      The attribute
+   * @public
+   */
+  getAttribute(attributeName) {
+    for(let attribute of this.attributes) {
+      if(attribute.constructor.name == attributeName) {
+        return attribute;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Encodes this Message instance from object oriented format to the binary
+   * format.This process envolve encode the CommonHeader and all attributes.
+   * @return {String} Binary string representing the BFCP Message
+   * @public
+   */
+  encode() {
+    let commonHeader = this.commonHeader.encode();
+    let attributes = '';
+    for(let attribute of this.attributes) {
+      attributes = attributes + attribute.encode();
+    }
+    let message = commonHeader + attributes;
+    let size = message.length / 8;
+    let octets = [];
+
+    for(let i = 0; i &lt; size; i++) {
+      octets.push(parseInt(message.substring(0 + 8 * i, 8 + 8 * i), 2));
+    }
+
+    return octets;
+  }
+}
+
+module.exports = Message;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-bfcp-lib.html">bfcp-lib</a></li></ul><h3>Classes</h3><ul><li><a href="bfcp-lib.Attribute.html">Attribute</a></li><li><a href="bfcp-lib.Attribute.BeneficiaryId.html">BeneficiaryId</a></li><li><a href="bfcp-lib.Attribute.FloorId.html">FloorId</a></li><li><a href="bfcp-lib.Attribute.FloorRequestId.html">FloorRequestId</a></li><li><a href="bfcp-lib.Attribute.FloorRequestInformation.html">FloorRequestInformation</a></li><li><a href="bfcp-lib.Attribute.FloorRequestStatus.html">FloorRequestStatus</a></li><li><a href="bfcp-lib.Attribute.Format.html">Format</a></li><li><a href="bfcp-lib.Attribute.Length.html">Length</a></li><li><a href="bfcp-lib.Attribute.RequestStatus.html">RequestStatus</a></li><li><a href="bfcp-lib.Attribute.SupportedAttributes.html">SupportedAttributes</a></li><li><a href="bfcp-lib.Attribute.SupportedPrimitives.html">SupportedPrimitives</a></li><li><a href="bfcp-lib.Attribute.Type.html">Type</a></li><li><a href="bfcp-lib.Complements.html">Complements</a></li><li><a href="bfcp-lib.Message.html">Message</a></li><li><a href="bfcp-lib.Message.CommonHeader.html">CommonHeader</a></li><li><a href="bfcp-lib.Message.FloorQuery.html">FloorQuery</a></li><li><a href="bfcp-lib.Message.FloorRelease.html">FloorRelease</a></li><li><a href="bfcp-lib.Message.FloorRequest.html">FloorRequest</a></li><li><a href="bfcp-lib.Message.FloorRequestStatus.html">FloorRequestStatus</a></li><li><a href="bfcp-lib.Message.FloorRequestStatusAck.html">FloorRequestStatusAck</a></li><li><a href="bfcp-lib.Message.FloorStatus.html">FloorStatus</a></li><li><a href="bfcp-lib.Message.FloorStatusAck.html">FloorStatusAck</a></li><li><a href="bfcp-lib.Message.Hello.html">Hello</a></li><li><a href="bfcp-lib.Message.HelloAck.html">HelloAck</a></li><li><a href="bfcp-lib.Message.PayloadLength.html">PayloadLength</a></li><li><a href="bfcp-lib.Message.Primitive.html">Primitive</a></li><li><a href="bfcp-lib.Message.RequestStatusValue.html">RequestStatusValue</a></li><li><a href="bfcp-lib.Name.Name.html">Name</a></li><li><a href="bfcp-lib.Parser.html">Parser</a></li><li><a href="bfcp-lib.User.html">User</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Sun Jun 16 2019 20:45:37 GMT-0300 (-03)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
